@@ -1,10 +1,12 @@
 require('dotenv').config();
+require('express-async-errors');
 const express = require('express');
 const connectDB = require('./db/connectDB');
 const notFound = require('./middleware/notFound');
 const errorHandler = require('./middleware/error-handler');
 const personRouter = require('./Routes/Person');
 const projectRouter = require('./Routes/Project');
+const authRouter = require('./Routes/auth');
 const cors = require('cors');
 
 const app = express();
@@ -14,6 +16,7 @@ app.use(cors());
 
 app.use('/users', personRouter);
 app.use('/projects', projectRouter);
+app.use('/auth', authRouter);
 
 app.use(notFound);
 app.use(errorHandler);
