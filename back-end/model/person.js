@@ -11,6 +11,7 @@ const personSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'please give name of the person'],
+        unique: true
     },
     password: {
         type: String,
@@ -19,8 +20,11 @@ const personSchema = new mongoose.Schema({
 })
 
 personSchema.pre('save', async function(next) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    if (this.password) {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    }
     next();
 })
 
@@ -32,8 +36,8 @@ personSchema.methods.createJWT = function(){
     )
 }
 
-personSchema.methods.comparePassword = function(candidatePassword) {
-    const isMatch = bcrypt.compare(candidatePassword, this.password);
+personSchema.methods.comparePassword = async function(candidatePassword) {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
     return isMatch;
 }
 
