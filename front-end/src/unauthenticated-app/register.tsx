@@ -1,32 +1,24 @@
 import React, { FormEvent } from 'react'
-import { useAuth } from "context/auth-context";
+import { useAuth } from "../context/auth-context";
+import { Button, Form, Input } from "antd";
 
 
 
 export const RegisterScreen = () => {
   const {register, user} = useAuth();
 
-  const handleSubmit = (event: FormEvent<Element> ) => {
-    event.preventDefault();
-
-    // @ts-ignore
-    const name = ( event.currentTarget["0"] as HTMLInputElement).value;
-
-
-    // @ts-ignore
-    const password = ( event.currentTarget["1"] as HTMLInputElement).value;
-
-    register({name, password});
+  const handleSubmit = (values:{name: string, password: string} ) => {
+    register(values);
   }
-  return <form onSubmit={handleSubmit}>
-    <div>
-      <label htmlFor="username">User Name</label>
-      <input type="text" id={'username'}/>
-    </div>
-    <div>
-      <label htmlFor="password">Password</label>
-      <input type="password" id={'password'}/>
-    </div>
-    <button type={'submit'}>Register</button>
-  </form>
+  return <Form onFinish={handleSubmit}>
+    <Form.Item name={'name'} rules={[{required: true, message: "please input username"}]}>
+      <Input  placeholder={"username"} type="text" id={'username'}/>
+    </Form.Item>
+    <Form.Item name={'password'} rules={[{required: true, message: "please input password"}]}>
+      <Input placeholder={'password'} type="password" id={'password'}/>
+    </Form.Item>
+    <Form.Item >
+      <Button type={'primary'} htmlType={'submit'}>Register</Button>
+    </Form.Item>
+  </Form>
 }

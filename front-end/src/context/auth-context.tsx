@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import * as auth from "provider/auth-provider"
+import * as auth from "../provider/auth-provider"
 import { User } from "../screens/project-list/search-panel";
 import { http } from "../utils/http";
 import { useMount } from "../utils";

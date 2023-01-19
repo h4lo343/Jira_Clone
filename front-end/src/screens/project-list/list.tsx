@@ -1,3 +1,4 @@
+import { Table } from "antd";
 import { User } from "./search-panel";
 
 interface Project {
@@ -14,6 +15,20 @@ interface ListProps {
 }
 
 export const List = ({list, users}:ListProps) => {
+  return <Table pagination={false} columns={[{
+    title:"name",
+    dataIndex:"name",
+    sorter:(a,b) => {
+      return a.name.localeCompare(b.name)
+  }
+  },{
+    title:"manager",
+    render(value, project,index){
+      return <span>
+        {users.find(user => user.id === project.personId)?.name || "unknown"}
+      </span>
+    }
+  }]} dataSource={list}></Table>
   return <table>
     <thead>
     <tr>
@@ -25,7 +40,7 @@ export const List = ({list, users}:ListProps) => {
     {
       list.map(project => <tr key={project.id}>
         <td>{project.name}</td>
-        <td>{users.find(user => user.id === project.personId)?.name || "unknown"}</td>
+        <td></td>
       </tr>)
     }
     </tbody>
