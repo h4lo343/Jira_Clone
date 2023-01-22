@@ -28,21 +28,5 @@ export const List = ({list, users}:ListProps) => {
         {users.find(user => user.id === project.personId)?.name || "unknown"}
       </span>
     }
-  }]} dataSource={list}></Table>
-  return <table>
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Manager</th>
-    </tr>
-    </thead>
-    <tbody>
-    {
-      list.map(project => <tr key={project.id}>
-        <td>{project.name}</td>
-        <td></td>
-      </tr>)
-    }
-    </tbody>
-  </table>
+  }]} dataSource={list} rowKey={'id'}></Table>
 }

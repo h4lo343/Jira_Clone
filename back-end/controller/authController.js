@@ -6,7 +6,7 @@ const me = async (req, res) => {
     const token = req.query.token;
     try{
         const payload = await jwt.verify(token, process.env.JWT_SECRET);
-        console.log(payload);     const person = await Person.find({id:payload.id});
+        const person = await Person.find({id:payload.id});
         res.status(200).json({user:person});
     }catch (error) {
         throw new CustomError(401, "unauthorized");
