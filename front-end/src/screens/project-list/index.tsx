@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import { cleanObject, useDebounce, useMount } from "../../utils/index";
 
 import { useHttp } from "../../utils/http";
+import styled from "@emotion/styled";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -27,8 +28,14 @@ export const ProjectListScreen = () => {
     client('users').then(setUsers);
   })
 
-  return <div>
-    <SearchPanel param={param} setParam={setParam} users={users} />
-    <List list={list} users={users}/>
-  </div>
+  return (
+    <Container>
+      <h1>Project List</h1>
+      <SearchPanel param={param} setParam={setParam} users={users} />
+      <List list={list} users={users}/>
+    </Container>)
 }
+
+const Container = styled.div`
+  padding: 3.2rem;
+`
