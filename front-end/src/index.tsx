@@ -17,9 +17,9 @@ root.render(
         fontSize:16
       },
     }}>
-      <AppProviders>
-        <App />
-      </AppProviders>
+        <AppProviders>
+          <App />
+        </AppProviders>
     </ConfigProvider>
   </React.StrictMode>
 );

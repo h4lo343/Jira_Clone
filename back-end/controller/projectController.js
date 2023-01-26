@@ -1,5 +1,6 @@
 const Project = require('../model/project');
 const Person = require('../model/person');
+const CustomError = require('../error/custom-error');
 
 const getProject = async (req, res) => {
     const { name, personId } = req.query;
@@ -16,8 +17,8 @@ const getProject = async (req, res) => {
     }
 
     const result = await Project.find(queryObject);
-    if(!result) {
-        throw new CustomError("no project found", 404);
+    if(result.length == 0) {
+        throw new CustomError("No Project Found", 404);
     }
     res.status(200).json(result);
 }

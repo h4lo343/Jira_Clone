@@ -1,8 +1,9 @@
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import { User } from "./search-panel";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
-interface Project {
+export interface Project {
   id: string,
   name: string,
   personId: string,
@@ -11,19 +12,19 @@ interface Project {
   created: number;
 }
 
-interface ListProps {
-  list: Project[],
+interface ListProps extends TableProps<Project> {
   users: User[],
 }
 
-export const List = ({list, users}:ListProps) => {
+export const List = ({users, ...props }:ListProps) => {
   return <Table
     pagination={false}
     columns={[
       {
         title:"name",
-        dataIndex:"name",
-        sorter:(a,b) => {return a.name.localeCompare(b.name)}
+        render(value, project) {
+          return <Link to={project.id+""}>{project.name}</Link>
+        }
       },
       {
         title:"Department",
@@ -46,6 +47,9 @@ export const List = ({list, users}:ListProps) => {
             {users.find(user => user.id === project.personId)?.name || "unknown"}
           </span>
           }
-      }
-  ]} dataSource={list} rowKey={'id'}></Table>
+        }
+      ]}
+    rowKey={'id'}
+    {...props}
+  />
 }
