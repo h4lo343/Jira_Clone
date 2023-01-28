@@ -8,15 +8,15 @@ import { Button, Typography } from "antd";
 import { useAsync } from "../../utils/use-async";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
+import { useUrlQueryParam } from "../../utils/url";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
   useDocumentTitle("Project List", false);
-  const [param, setParam] = useState({
-    name: '',
-    personId: ''
-  })
+
+  const [keys] = useState<('name' | 'personId')[]>(['name', 'personId']);
+  const [param, setParam] = useUrlQueryParam(keys);
   const debouncedParam = useDebounce(param, 1000);
   const {isLoading, error, data: list} = useProjects(debouncedParam);
   const {data:users} = useUsers();
@@ -28,6 +28,8 @@ export const ProjectListScreen = () => {
       <List dataSource={list || []} loading={isLoading} users={users || []}/>
     </Container>)
 }
+
+
 
 const Container = styled.div`
   padding: 3.2rem;

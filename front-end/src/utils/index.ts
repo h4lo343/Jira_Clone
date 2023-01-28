@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from "react";
 export const isFalsy = (value: unknown) => value === 0 ? false : !value
 
 export const cleanObject = (object:object) => {
-  const result = {...object};
+  const result:{[key:string]:any} = {...object};
   Object.keys(result).forEach(key => {
-    // @ts-ignore
+
     const value = result[key];
     if (isFalsy(value)) {
-      // @ts-ignore
+
       delete result[key]
     }
   })
@@ -25,7 +25,6 @@ export const useDebounce = <v>(value:v, delay?:number) => {
   const [debounceValue, setDebounceValue] = useState(value);
 
   useEffect(() => {
-
     const timeout = setTimeout(() => setDebounceValue(value), delay);
     return () => clearTimeout(timeout);
   }, [value]);

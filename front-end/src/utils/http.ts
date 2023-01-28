@@ -4,11 +4,13 @@ import { useAuth } from "../context/auth-context";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+// 这里使用了透传，透传fetch原本的config
 interface Config extends RequestInit {
   token?:string,
   data?:object
 }
 
+// 这里使用了透传，透传fetch原本的config
 export const http = async (endpoint: string, {data, token, headers, ...customConfig}: Config = {}) => {
   const config = {
     method: 'GET',

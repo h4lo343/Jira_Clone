@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@types/qs": "^6.9.7",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.2"
   },
