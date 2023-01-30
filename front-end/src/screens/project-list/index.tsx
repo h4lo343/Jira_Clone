@@ -9,23 +9,24 @@ import { useAsync } from "../../utils/use-async";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useUrlQueryParam } from "../../utils/url";
+import { useProjectSearchParams } from "./util";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
   useDocumentTitle("Project List", false);
 
-  const [keys] = useState<('name' | 'personId')[]>(['name', 'personId']);
-  const [param, setParam] = useUrlQueryParam(keys);
+  const [param, setParam] = useProjectSearchParams();
   const debouncedParam = useDebounce(param, 1000);
-  const {isLoading, error, data: list} = useProjects(debouncedParam);
+  const {isLoading, error, data: list, retry } = useProjects(debouncedParam);
   const {data:users} = useUsers();
+
   return (
     <Container>
       <h1>Project List</h1>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-      <List dataSource={list || []} loading={isLoading} users={users || []}/>
+      <List refresh={retry} dataSource={list || []} loading={isLoading} users={users || []}/>
     </Container>)
 }
 

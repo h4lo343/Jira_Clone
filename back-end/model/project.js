@@ -18,6 +18,10 @@ const projectSchema = new mongoose.Schema({
     },
     created: {
         type: Date
+    },
+    pin: {
+        type: Boolean,
+        required: [true, 'need pin for project'],
     }
 })
 

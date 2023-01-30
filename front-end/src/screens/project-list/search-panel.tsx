@@ -1,20 +1,20 @@
 
 import { Form, Input, Select } from "antd";
+import { Project } from "./list";
+import { UserSelector } from "../../components/user-selector";
 
 export interface User {
   token: string;
-  id: string,
+  id: number,
   name: string,
   email: string,
-  title: string
+  title: string,
+  organization: string
 }
 
 interface SearchPanelProps {
   users: User[],
-  param: {
-    name: string,
-    personId: string
-  },
+  param: Partial<Pick<Project, 'name' | 'personId'> >
   setParam: (param: SearchPanelProps['param']) => void
 }
 export const SearchPanel = ({param, setParam, users}: SearchPanelProps) => {
@@ -24,7 +24,6 @@ export const SearchPanel = ({param, setParam, users}: SearchPanelProps) => {
     <Form.Item>
       <Input
         type="text"
-        value={param.name}
         onChange={event => setParam({
         ...param,
         name: event.target.value,
@@ -33,20 +32,16 @@ export const SearchPanel = ({param, setParam, users}: SearchPanelProps) => {
       />
     </Form.Item>
     <Form.Item>
-      <Select value={param.personId}
-              onChange={value => {
-                setParam({
-                  ...param,
-                  personId: value,
-                })
-              }
-            }
-      >
-        <Select.Option value={""}>Manager</Select.Option>
-        {
-          users.map(user => <Select.Option key={user.id} value={String(user.id)}>{user.name}</Select.Option>)
-        }
-      </Select>
+      <UserSelector
+        defaultOptionName={"Manager"}
+        value={param.personId}
+        onChange={value => {
+          setParam({
+            ...param,
+            personId: value,
+          })
+      }}/>
+
     </Form.Item>
   </Form>
 }

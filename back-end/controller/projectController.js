@@ -23,6 +23,23 @@ const getProject = async (req, res) => {
     res.status(200).json(result);
 }
 
+
+const updateProject = async (req, res) => {
+    const {id, ...config} = req.body
+
+
+    const newProject = await Project.findOneAndUpdate(
+        {id: id},
+        config
+    )
+    if (!newProject) {
+        throw new CustomError("No Project Found", 404);
+    }
+
+    res.status(200).json(newProject);
+}
+
 module.exports = {
-    getProject
+    getProject,
+    updateProject
 }

@@ -17,6 +17,7 @@ export const  useAsync = <D>(initialState?: State<D>) => {
     ...defaultInitialState,
     ...initialState
   })
+  const [retry, setRetry] = useState(()=>()=>{})
 
   const setData = (data: D | null) => setState({
     data,
@@ -30,10 +31,15 @@ export const  useAsync = <D>(initialState?: State<D>) => {
     data: null
   })
 
-  const run = (promise: Promise<D>) => {
+  const run = (promise: Promise<D>, runConfig?: {retry: ()=> Promise<D>}) => {
     if(!promise || !promise.then) {
       throw new Error('Please pass promise')
     }
+    setRetry(()=>()=> {
+      if(runConfig?.retry())
+      run(runConfig.retry(),runConfig)
+    })
+
     setState({...state, stat: 'loading'});
     return promise.then(data => {
       setData(data);
@@ -42,7 +48,9 @@ export const  useAsync = <D>(initialState?: State<D>) => {
       setError(error);
       return Promise.reject(error);
     })
-  }
+  };
+
+
 
   return {
     isIdle: state.stat === "idle",
@@ -52,6 +60,8 @@ export const  useAsync = <D>(initialState?: State<D>) => {
     run,
     setData,
     setError,
+    // retry被调用时重新跑一遍run
+    retry,
     ...state
   }
 }
