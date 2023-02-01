@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useMountedRef } from "./index";
 
 interface State<D> {
   error: Error | null;
@@ -16,7 +17,8 @@ export const  useAsync = <D>(initialState?: State<D>) => {
   const [state, setState] = useState<State<D>>({
     ...defaultInitialState,
     ...initialState
-  })
+  });
+  const mountedRef = useMountedRef();
   const [retry, setRetry] = useState(()=>()=>{})
 
   const setData = (data: D | null) => setState({
@@ -31,24 +33,30 @@ export const  useAsync = <D>(initialState?: State<D>) => {
     data: null
   })
 
-  const run = (promise: Promise<D>, runConfig?: {retry: ()=> Promise<D>}) => {
-    if(!promise || !promise.then) {
-      throw new Error('Please pass promise')
-    }
-    setRetry(()=>()=> {
-      if(runConfig?.retry())
-      run(runConfig.retry(),runConfig)
-    })
+  const run = useCallback(
+    (promise: Promise<D>, runConfig?: {retry: ()=> Promise<D>}) => {
+      if(!promise || !promise.then) {
+        throw new Error('Please pass promise')
+      }
+      setRetry(()=>()=> {
+        if(runConfig?.retry())
+          run(runConfig.retry(),runConfig)
+      })
 
-    setState({...state, stat: 'loading'});
-    return promise.then(data => {
-      setData(data);
-      return data;
-    }).catch(error => {
-      setError(error);
-      return Promise.reject(error);
-    })
-  };
+      setState({...state, stat: 'loading'});
+      return promise.then(data => {
+        if (mountedRef.current) {
+          setData(data);
+        }
+        return data;
+      }).catch(error => {
+        setError(error);
+        return Promise.reject(error);
+      })
+    },
+    []
+  );
+
 
 
 

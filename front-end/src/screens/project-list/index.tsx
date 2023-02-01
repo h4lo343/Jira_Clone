@@ -13,7 +13,7 @@ import { useProjectSearchParams } from "./util";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = (props:{projectButton: JSX.Element}) => {
   useDocumentTitle("Project List", false);
 
   const [param, setParam] = useProjectSearchParams();
@@ -23,10 +23,19 @@ export const ProjectListScreen = () => {
 
   return (
     <Container>
-      <h1>Project List</h1>
+      <Row>
+        <h1>Project List</h1>
+        {props.projectButton}
+      </Row>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-      <List refresh={retry} dataSource={list || []} loading={isLoading} users={users || []}/>
+      <List
+        refresh={retry}
+        dataSource={list || []}
+        loading={isLoading}
+        users={users || []}
+        projectButton = {props.projectButton}
+      />
     </Container>)
 }
 
@@ -34,4 +43,9 @@ export const ProjectListScreen = () => {
 
 const Container = styled.div`
   padding: 3.2rem;
+`
+
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
 `

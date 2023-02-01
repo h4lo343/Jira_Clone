@@ -20,6 +20,8 @@ const getProject = async (req, res) => {
     if(result.length == 0) {
         throw new CustomError("No Project Found", 404);
     }
+
+
     res.status(200).json(result);
 }
 

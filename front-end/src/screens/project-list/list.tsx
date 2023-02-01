@@ -1,9 +1,10 @@
-import { Table, TableProps } from "antd";
+import { Dropdown, MenuProps, Table, TableProps } from "antd";
 import { User } from "./search-panel";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
 import { useEditProject } from "../../utils/project";
+import { ButtonNoPadding } from "../../components/lib";
 
 export interface Project {
   id: number,
@@ -16,12 +17,19 @@ export interface Project {
 
 interface ListProps extends TableProps<Project> {
   users: User[],
-  refresh?: () => void
+  refresh?: () => void,
+  projectButton: JSX.Element
 }
 
 export const List = ({users, ...props }:ListProps) => {
   const {mutate} = useEditProject();
   const pinProject = (id: number) => (pin: boolean) => mutate({id, pin}).then(props.refresh);
+  const items : MenuProps['items'] = [
+    {
+      key: 'edit',
+      label: props.projectButton,
+    }
+  ]
 
   return <Table
     pagination={false}
@@ -59,7 +67,14 @@ export const List = ({users, ...props }:ListProps) => {
             {users.find(user => user.id === project.personId)?.name || "unknown"}
           </span>
           }
+        },
+      {
+        render(value, project) {
+          return <Dropdown menu={{items}}>
+            <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
+          </Dropdown>
         }
+      }
       ]}
     rowKey={'id'}
     {...props}
