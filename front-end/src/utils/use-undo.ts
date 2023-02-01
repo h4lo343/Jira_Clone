@@ -12,7 +12,9 @@ export const useUndo = <T>(initialPresent: T) => {
     present: initialPresent,
     future: []
   })
-  
+  const canUndo = state.past.length !== 0;
+  const canRedo = state.future.length !== 0;
+
   const undo = useCallback(() => {
     setState(currentState => {
       const {past, present, future} = currentState;
@@ -31,32 +33,53 @@ export const useUndo = <T>(initialPresent: T) => {
   }, [])
 
   const redo = () => {
-    useCallback(
-      () => {
-        callback;
-      },
-      [input]
-    );
-    
+    useCallback(() => {
+      setState(currentState => {
+        const {past, present, future} = currentState;
+
+        if (future.length == 0 ) {
+          return currentState
+        }
+
+        const next = future[0];
+        const newFuture = future.slice(1);
+
+        return {
+          past: [...past, present],
+          present: next,
+          future: newFuture
+        }
+      })
+    },[])
+
   }
 
-  const set = (newPresent: T) => {
-    if(newPresent === present) {
-      return;
-    }
-    setPast([...past, present]);
-    setPresent(newPresent);
-    setFuture([]);
-  }
+  const set = useCallback((newPresent:T)=> {
+    setState(currentState => {
+      const {past, present, future} = currentState;
+      if(newPresent === present) {
+        return currentState;
+      }
+      return {
+        past: [...past, present],
+        present: newPresent,
+        future: []
+      }
+            })
+  }, [])
 
-  const reset = (newPresent: T) => {
-    setPast([]);
-    setFuture([]);
-    setPresent(newPresent);
-  }
+  const reset = useCallback((newPresent: T) => {
+    setState(() => {
+      return {
+        past: [],
+        present: newPresent,
+        future: []
+      }
+    })
+  }, [])
 
   return [
-    {past, present, future},
+    state,
     {set, reset, undo, redo, canUndo, canRedo}
   ]
 }
