@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import { useMountedRef } from "./index";
 
 interface State<D> {
@@ -13,21 +13,25 @@ const defaultInitialState: State<null> = {
   error: null
 }
 
+
+
 export const  useAsync = <D>(initialState?: State<D>) => {
-  const [state, setState] = useState<State<D>>({
+  const [state, dispatch] = useReducer((state: State<D>, action: Partial<State<D>>) => ({...state, ...action}),{
     ...defaultInitialState,
     ...initialState
   });
+
   const mountedRef = useMountedRef();
   const [retry, setRetry] = useState(()=>()=>{})
 
-  const setData = (data: D | null) => setState({
+
+  const setData = (data: D | null) => dispatch({
     data,
     stat: "success",
     error: null
   })
 
-  const setError = (error: Error) => setState({
+  const setError = (error: Error) => dispatch({
     error,
     stat: 'error',
     data: null
@@ -43,7 +47,7 @@ export const  useAsync = <D>(initialState?: State<D>) => {
           run(runConfig.retry(),runConfig)
       })
 
-      setState({...state, stat: 'loading'});
+      dispatch({...state, stat: 'loading'});
       return promise.then(data => {
         if (mountedRef.current) {
           setData(data);
