@@ -1,10 +1,13 @@
 import { Button, Divider, List, Popover, Typography } from "antd";
 import { useProjects } from "../utils/project";
 import styled from '@emotion/styled';
+import { useDispatch } from "react-redux";
+import { projectListActions } from "../screens/project-list/project-list-slice";
 
 
 
-export const ProjectPopover = (props:{projectButton: JSX.Element}) => {
+export const ProjectPopover = () => {
+  const dispatch = useDispatch()
   const {data:projects, isLoading} = useProjects();
   const pinnedProject = projects?.filter(project => project.pin);
 
@@ -18,7 +21,10 @@ export const ProjectPopover = (props:{projectButton: JSX.Element}) => {
       </List.Item>}
     />
     <Divider style={{marginTop:"0"}}/>
-    {props.projectButton}
+    <Button
+      style={{marginLeft:"20px"}}
+      onClick={() => dispatch(projectListActions.openProjectModal())}
+    >Create Projects</Button>
   </ContentContainer>
   return <Popover placement={"bottom"} content={content}>
     <span>

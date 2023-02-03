@@ -10,22 +10,29 @@ import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useUrlQueryParam } from "../../utils/url";
 import { useProjectSearchParams } from "./util";
+import { useDispatch } from "react-redux";
+import { ButtonNoPadding } from "../../components/lib";
+import { projectListActions } from "./project-list-slice";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export const ProjectListScreen = (props:{projectButton: JSX.Element}) => {
+export const ProjectListScreen = () => {
   useDocumentTitle("Project List", false);
 
   const [param, setParam] = useProjectSearchParams();
   const debouncedParam = useDebounce(param, 1000);
   const {isLoading, error, data: list, retry } = useProjects(debouncedParam);
   const {data:users} = useUsers();
+  const dispatch = useDispatch();
 
   return (
     <Container>
       <Row>
         <h1>Project List</h1>
-        {props.projectButton}
+        <Button
+          onClick={() => dispatch(projectListActions.openProjectModal())}
+        >Create Project
+        </Button>
       </Row>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
@@ -34,7 +41,6 @@ export const ProjectListScreen = (props:{projectButton: JSX.Element}) => {
         dataSource={list || []}
         loading={isLoading}
         users={users || []}
-        projectButton = {props.projectButton}
       />
     </Container>)
 }
