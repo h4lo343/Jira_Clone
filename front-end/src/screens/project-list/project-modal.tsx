@@ -1,11 +1,12 @@
 import { Button, Drawer } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { projectListActions, selectProjectModalOpen } from "./project-list-slice";
+import { useAppSelector } from "../../store";
 
 
 export const ProjectModal = () => {
   const dispatch = useDispatch();
-  const projectModalOpen = useSelector(selectProjectModalOpen)
+  const projectModalOpen = useAppSelector(selectProjectModalOpen)
   return <Drawer
     onClose={() => dispatch(projectListActions.closeProjectModal())}
     open={projectModalOpen}

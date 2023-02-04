@@ -10,7 +10,7 @@ const initialState: State = {
 }
 
 export const projectListSlice = createSlice({
-  name: 'projectListSlice',
+  name: 'projectList',
   initialState,
   reducers: {
     openProjectModal(state) {
