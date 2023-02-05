@@ -1,12 +1,14 @@
 import { Button, Divider, List, Popover, Typography } from "antd";
 import { useProjects } from "../utils/project";
 import styled from '@emotion/styled';
+import { useProjectModal } from "../screens/project-list/util";
 
 
 
-export const ProjectPopover = (props:{projectButton: JSX.Element}) => {
+export const ProjectPopover = () => {
   const {data:projects, isLoading} = useProjects();
   const pinnedProject = projects?.filter(project => project.pin);
+  const {open} = useProjectModal();
 
   const content = <ContentContainer>
     <List
@@ -18,7 +20,10 @@ export const ProjectPopover = (props:{projectButton: JSX.Element}) => {
       </List.Item>}
     />
     <Divider style={{marginTop:"0"}}/>
-    {props.projectButton}
+    <Button
+      onClick={open}
+      type={"link"}
+    > Create Project </Button>
   </ContentContainer>
   return <Popover placement={"bottom"} content={content}>
     <span>
