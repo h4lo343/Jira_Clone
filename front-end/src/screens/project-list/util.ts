@@ -5,15 +5,22 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 export const useProjectSearchParams = () => {
   const [param, setParam] = useUrlQueryParam(["name", "personId"]);
-  // 因为可能用户不输入param，这个时候Number(null)可能为0，所以要加上 ||undefined
   return [
-    useMemo(() => { return {...param, personId: Number(param.personId) || undefined}}, [param]),
-    setParam
-  ] as const
+    useMemo(
+      () => ({ ...param, personId: Number(param.personId) || undefined }),
+      [param]
+    ),
+    setParam,
+  ] as const;
+};
+
+export const useProjectQueryKey = () => {
+  const [params] = useProjectSearchParams()
+  return ['projects', params]
 }
 
 export const useProjectModal = () => {
-  const [ state, setProjectCreate] = useUrlState<{
+  const [state, setProjectCreate] = useUrlState<{
     projectCreate: boolean,
     editingProjectId: string | undefined
   }>({

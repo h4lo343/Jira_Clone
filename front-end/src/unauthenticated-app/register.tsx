@@ -16,6 +16,7 @@ export const RegisterScreen = ({onError}: {onError: (error:Error) => void}) => {
       return;
     }
     try {
+      console.log(values);
       await run(register(values));
     }catch (e:any) {
       onError(e)
@@ -24,7 +25,7 @@ export const RegisterScreen = ({onError}: {onError: (error:Error) => void}) => {
   }
   return <Form onFinish={handleSubmit}>
     <Form.Item
-      name={"username"}
+      name={"name"}
       rules={[{ required: true, message: "Please input username" }]}
     >
       <Input placeholder={"Username"} type="text" id={"username"} />

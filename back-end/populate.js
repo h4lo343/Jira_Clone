@@ -10,8 +10,8 @@ const projectData = require('./projectData.json');
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);
-        await Person.deleteMany();
-        await Person.create(personData);
+        // await Person.deleteMany();
+        // await Person.create(personData);
         await Project.deleteMany();
         await Project.create(projectData);
         console.log("done")

@@ -1,11 +1,11 @@
-import { Button, Dropdown, Menu, MenuProps, Table, TableProps } from "antd";
+import { Button, Dropdown, Menu, MenuProps, Modal, Table, TableProps } from "antd";
 import { User } from "./search-panel";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
-import { useEditProject } from "../../utils/project";
+import { useDeleteProject, useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectQueryKey } from "./util";
 import { start } from "repl";
 
 export interface Project {
@@ -23,10 +23,22 @@ interface ListProps extends TableProps<Project> {
 
 export const List = ({users, ...props }:ListProps) => {
   const {open} = useProjectModal();
-  const {mutate} = useEditProject();
+  const {mutate} = useEditProject(useProjectQueryKey());
   const pinProject = (id: number) => (pin: boolean) => mutate({id, pin});
   const {startEdit} = useProjectModal();
   const editProject = (id: number) => startEdit(id);
+
+  const {mutate: deleteProject} = useDeleteProject(useProjectQueryKey());
+  const confirmDeleteProject = (id: number) => {
+    Modal.confirm({
+      title: "Do you really want to delete this project?",
+      content: "Click to delete",
+      okText: "Confirm",
+      onOk() {
+        deleteProject({id})
+      }
+    })
+  }
 
   return <Table
     pagination={false}
@@ -73,7 +85,7 @@ export const List = ({users, ...props }:ListProps) => {
                 <Menu.Item onClick={() => editProject(project.id)} key={'Edit'}>
                   Edit
                 </Menu.Item>
-                <Menu.Item onClick={() => editProject(project.id)} key={'Delete'}>
+                <Menu.Item onClick={() => confirmDeleteProject(project.id)} key={'Delete'}>
                   Delete
                 </Menu.Item>
               </Menu>
