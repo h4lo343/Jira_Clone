@@ -30,7 +30,7 @@ export const useProjectModal = () => {
 
   const {projectCreate, editingProjectId} = state;
 
-  const {data: editingProject, isLoading} = useProject(Number(editingProjectId));
+  const {data: editingProject, isLoading} = useProject(editingProjectId);
   const open = () => setProjectCreate({projectCreate: true});
   const close = () => setProjectCreate({ projectCreate: undefined, editingProjectId: undefined });
   const startEdit = (id: number) => {setProjectCreate({projectCreate: undefined, editingProjectId: id});

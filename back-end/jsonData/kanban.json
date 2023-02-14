@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "developing",
+    "projectId": 3
+  },
+  {
+    "id": 2,
+    "name": "finished",
+    "projectId": 3
+  },
+  {
+    "id": 3,
+    "name": "waiting",
+    "projectId": 3
+  }
+]

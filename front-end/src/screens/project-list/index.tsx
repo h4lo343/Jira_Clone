@@ -1,5 +1,5 @@
 import { SearchPanel } from "./search-panel";
-import { List, Project } from "./list";
+import { List } from "./list";
 import {useState, useEffect} from 'react';
 import { cleanObject, useDebounce, useDocumentTitle, useMount } from "../../utils/index";
 import { useHttp } from "../../utils/http";
@@ -10,6 +10,7 @@ import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useUrlQueryParam } from "../../utils/url";
 import { useProjectModal, useProjectSearchParams } from "./util";
+import { Project } from "../../types/project";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 

@@ -1,16 +1,7 @@
-
-import { Form, Input, Select } from "antd";
-import { Project } from "./list";
+import { Form, Input } from "antd";
 import { UserSelector } from "../../components/user-selector";
-
-export interface User {
-  token: string;
-  id: number,
-  name: string,
-  email: string,
-  title: string,
-  organization: string
-}
+import { Project } from "../../types/project";
+import { User } from "../../types/user";
 
 interface SearchPanelProps {
   users: User[],
@@ -34,7 +25,6 @@ export const SearchPanel = ({param, setParam, users}: SearchPanelProps) => {
     <Form.Item>
       <UserSelector
         defaultOptionName={"Manager"}
-        value={param.personId}
         onChange={value => {
           setParam({
             ...param,

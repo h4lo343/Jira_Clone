@@ -1,11 +1,11 @@
 import { useAsync } from "./use-async";
-import { Project } from "../screens/project-list/list";
 import { useEffect } from "react";
 import { cleanObject } from "./index";
 import { useHttp } from "./http";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import { useProjectSearchParams } from "../screens/project-list/util";
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic-options";
+import { Project } from "../types/project";
 
 export const useProjects =(param?: Partial<Project>) => {
   const client = useHttp();
@@ -52,7 +52,7 @@ export const useDeleteProject = (queryKey: QueryKey) => {
 
 export const useProject = (id?: number) => {
   const client = useHttp();
-  return useQuery<Project[], Error>(
+  return useQuery<Project, Error>(
     ['project', {id}],
     () => client(`projects/${id}`),
     {
