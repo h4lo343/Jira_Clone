@@ -1,7 +1,8 @@
 import { useLocation } from "react-router";
 import { useProject } from "../../utils/project";
-import { useUrlQueryParam } from "../../utils/url";
-import { useMemo } from "react";
+import { useSetUrlSearchParam, useUrlQueryParam } from "../../utils/url";
+import { useCallback, useMemo } from "react";
+import { useTask } from "../../utils/task";
 
 
 export const useProjectIdInUrl = () => {
@@ -32,12 +33,32 @@ export const useTasksSearchParams = () => {
   return useMemo(() => {
     return {
       projectId: projectId,
-      typeId: param.typeId || undefined,
-      processorId: param.processorId || undefined,
-      tagId: param.tagId || undefined,
+      typeId: param.typeId ,
+      processorId: param.processorId ,
+      tagId: param.tagId ,
       name: param.name
      }
   }, [projectId, param])
 }
 
 export const useTasksQueryKey = () => ['tasks', useTasksSearchParams()]
+
+export const useTaskModal = () => {
+  const [{editingTaskId}, setEditingTaskId] = useUrlQueryParam(['editingTaskId'])
+
+  const {data: editingTask, isLoading} = useTask(Number(editingTaskId));
+  const startEdit = useCallback( (id:number) => {
+    setEditingTaskId({editingTaskId:id})
+  }, [setEditingTaskId])
+  const close = useCallback(() => {
+    setEditingTaskId({editingTaskId: undefined})
+  }, [setEditingTaskId])
+
+  return {
+    editingTaskId,
+    editingTask,
+    startEdit,
+    close,
+    isLoading
+  }
+}

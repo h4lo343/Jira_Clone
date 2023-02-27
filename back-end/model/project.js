@@ -32,7 +32,6 @@ projectSchema.post('remove',async function(next) {
         projects[i].id = i + 1;
         await projects[i].save();
     }
-
 });
 
 

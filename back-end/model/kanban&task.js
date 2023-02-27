@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const kanbanSchema = mongoose.Schema({
     id: {
         type: Number,
-        required: [true, 'Please provide taskId']
+        required: [true, 'Please provide taskId'],
+        unique: true
     },
     name: {
         type: String,
-        enum: ["waiting", "developing", "finished"],
         required: [true, 'Please provide status']
     },
     projectId: {
@@ -17,6 +17,11 @@ const kanbanSchema = mongoose.Schema({
 })
 
 const taskSchema = mongoose.Schema({
+    id: {
+        type: Number,
+        required: [true, 'Please provide taskId'],
+        unique: true
+    },
     kanbanId: {
         type: Number,
         ref: "Kanban",

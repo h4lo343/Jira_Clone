@@ -4,48 +4,55 @@
     "name": "Management page development",
     "projectId": 3,
     "type": "bug",
-    "processorId": 1
+    "processorId": 1,
+    "id": 1
   },
   {
     "kanbanId": 1,
     "name": "Register page development",
     "projectId": 3,
     "type": "task",
-    "processorId": 1
+    "processorId": 1,
+    "id": 2
   },
   {
     "kanbanId": 2,
     "name": "Login page development",
     "projectId": 3,
     "type": "task",
-    "processorId": 3
+    "processorId": 3,
+    "id": 3
   },
   {
     "kanbanId": 2,
     "name": "Teacher page debut",
     "projectId": 3,
     "type": "bug",
-    "processorId": 4
+    "processorId": 4,
+    "id": 4
   },
   {
     "kanbanId": 3,
     "name": "Performance Optimization",
     "projectId": 3,
     "type": "bug",
-    "processorId": 2
+    "processorId": 2,
+    "id": 5
   },
   {
     "kanbanId": 3,
     "name": "UI development",
     "projectId": 3,
     "type": "task",
-    "processorId": 3
+    "processorId": 3,
+    "id": 6
   },
   {
     "kanbanId": 3,
     "name": "Unit test",
     "projectId": 3,
     "type": "task",
-    "processorId": 1
+    "processorId": 1,
+    "id": 7
   }
 ]

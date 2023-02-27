@@ -6,4 +6,5 @@ export interface Task {
   epicId: number,
   kanbanId: number,
   typeId: number,
+  id: number
 }

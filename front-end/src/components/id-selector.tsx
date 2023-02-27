@@ -14,20 +14,20 @@ interface IdSelectorProps extends Omit<SelectProps, 'value'|'onChange'|'options'
 export const IdSelector = (props: IdSelectorProps) => {
 
   // 用restProps接收透传的其他参数
-  const {onChange, defaultOptionName, options, ...restProps} = props;
-
+  const { value, onChange, defaultOptionName, options, ...restProps } = props;
   return <Select
-
-    defaultValue={0}
-    onChange={value => onChange?.(toNumber(value))}
+    value={options?.length ? toNumber(value) : 0}
+    onChange={(value) => onChange?.(toNumber(value))}
     {...restProps}
   >
-    {
-      defaultOptionName ? <Select.Option value={0}>{defaultOptionName}</Select.Option> : null
-    }
-    {
-      options?.map(option => <Select.Option value={option.id} key={option.id}>{option.name}</Select.Option>)
-    }
+    {defaultOptionName ? (
+      <Select.Option value={0}>{defaultOptionName}</Select.Option>
+    ) : null}
+    {options?.map((option) => (
+      <Select.Option key={option.id} value={option.id}>
+        {option.name}
+      </Select.Option>
+    ))}
   </Select>
 }
 

@@ -1,7 +1,7 @@
 const express =require('express');
 const router = express.Router();
-const {getKanban} = require('../controller/kanbanController');
+const {getKanban, addKanban, deleteKanban} = require('../controller/kanbanController');
 
-router.get('/', getKanban);
-
+router.route('/').get(getKanban).post(addKanban);
+router.route('/:id').delete(deleteKanban);
 module.exports = router;
