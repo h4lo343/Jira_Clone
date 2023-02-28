@@ -17,6 +17,7 @@ import { Drag, Drop, DropChild } from "../../components/drag-and-drop";
 
 
 export const KanbanScreen = () => {
+
   useDocumentTitle('Kanban List')
 
   const {data: currentProject} = useProjectInUrl();
