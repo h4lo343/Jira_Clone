@@ -3,6 +3,27 @@ const Project = require('../model/project');
 const CustomError = require("../error/custom-error");
 const mongoose = require("mongoose");
 
+const reorder = async (req, res) => {
+    const {fromId, referenceId, type} = req.body;
+    const TaskSource = await Task.findOne({id:fromId});
+    const Tasks = await Task.find({kanbanId: TaskSource.kanbanId})
+    const orderedTasks = Tasks.sort((a, b) => a.order - b.order);
+    const from = orderedTasks.findIndex((obj) => obj.id === fromId)
+    const dest = orderedTasks.findIndex((obj) => obj.id === referenceId)
+
+    Tasks.splice(from, 1);
+    Tasks.splice(dest, 0, TaskSource);
+
+    for (let i=0; i<Tasks.length; i++) {
+        const task = Tasks[i];
+        task.order = i+1;
+        task.save();
+    }
+
+    res.status(200).json({message: "ok"});
+}
+
+
 const getTasks = async (req, res) => {
     const {projectId, typeId, processorId, name} = req.query;
     const queryObject = {};
@@ -23,6 +44,8 @@ const getTasks = async (req, res) => {
     }
 
     const Tasks = await Task.find(queryObject);
+
+    Tasks.sort((a, b) => a.order - b.order);
     res.status(200).json(Tasks);
 
     if (!Tasks) {
@@ -42,7 +65,15 @@ const getTaskTypes = async (req, res) => {
 }
 
 const addTask = async (req,res) => {
-    const count = await mongoose.model('Task').countDocuments();
+    const tasks = await Task.find({});
+    let maxOrder = 0;
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].order > maxOrder) {
+            maxOrder = tasks[i].order;
+        }
+    }
+    req.body.order = maxOrder + 1;
+    const count = await Task.countDocuments();
     if (req.body.typeId === "2") {
         req.body.type = "task"
     }
@@ -52,6 +83,7 @@ const addTask = async (req,res) => {
     req.body.id = count + 1;
     const newTask = await Task.create(req.body)
     res.status(201).send(newTask);
+    req.body.order = count + 1;
 }
 
 const getTask = async (req, res) => {
@@ -104,5 +136,6 @@ module.exports = {
     addTask,
     getTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    reorder
 }

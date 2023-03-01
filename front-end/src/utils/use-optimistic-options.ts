@@ -30,3 +30,6 @@ export const useAddConfig = (queryKey: QueryKey) => useConfig(queryKey, (target,
   return old ? [...old, target] : []
 })
 
+export const useReorderConfig = (queryKey: QueryKey) => {
+  return useConfig(queryKey, (target, old) => old || [])
+}

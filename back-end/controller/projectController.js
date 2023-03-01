@@ -39,6 +39,7 @@ const getProjectById = async (req, res) => {
 const addProject = async (req,res) => {
     const count = await mongoose.model('Project').countDocuments();
     req.body.id = count + 1;
+    req.body.created = new Date();
     const newProject = await Project.create(req.body)
     res.status(201).send(newProject);
 }

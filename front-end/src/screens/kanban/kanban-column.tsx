@@ -67,13 +67,14 @@ const More = ({kanban}:{kanban: Kanban}) => {
 export const KanbanColumn = React.forwardRef<HTMLDivElement, {kanban: Kanban}>(({ kanban,...props }, ref) => {
      const { data: allTasks } = useTasks(useTasksSearchParams());
     const tasks = allTasks?.filter(task => task.kanbanId === kanban.id);
+
     return <Container {...props} ref={ref}>
       <Row between={true}>
         <h2>{kanban.name}</h2>
         <More kanban={kanban} />
       </Row>
       <TasksContainer>
-        <Drop type={'ROW'} direction={'vertical'} droppableId={'task' + kanban.id}>
+        <Drop type={'ROW'} direction={'vertical'} droppableId={kanban.id+''}>
           <DropChild>
             {tasks?.map((task, taskIndex) =>
               <Drag key={task.id} index={taskIndex} draggableId={'task' + task.id}>

@@ -38,7 +38,12 @@ export const http = async (endpoint: string, {data, token, headers, ...customCon
       if(response.ok) {
         return data
       }else {
-        return Promise.reject(data);}
+
+        return Promise.reject(data).catch((error) => {
+          console.log(error.message);
+        })
+
+          ;}
     })
 }
 

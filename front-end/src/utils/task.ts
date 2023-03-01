@@ -3,7 +3,8 @@ import { useHttp } from "./http";
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { Task } from "../types/task";
 import { Kanban } from "../types/kanban";
-import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic-options";
+import { useAddConfig, useDeleteConfig, useEditConfig, useReorderConfig } from "./use-optimistic-options";
+import { SortProps } from "./kanban";
 
 
 export const useTasks = (param?: { processorId?: any; tagId?: any; name?: any; typeId?: any; projectId?: number }) => {
@@ -47,7 +48,7 @@ export const useEditTask = (queryKey: QueryKey) => {
         method: "PATCH",
         data: params,
       }),
-    useEditConfig(queryKey)
+
   );
 };
 
@@ -62,3 +63,15 @@ export const useDeleteTask = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   );
 };
+
+export const useReorderTask = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation((params: SortProps) => {
+      return client('tasks/reorder' , {
+        data: params,
+        method: 'POST'
+      });
+    },
+    useReorderConfig(queryKey)
+  )
+}

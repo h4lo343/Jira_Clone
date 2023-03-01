@@ -2,16 +2,19 @@
   {
     "id": 1,
     "name": "developing",
-    "projectId": 3
+    "projectId": 3,
+    "order": 1
   },
   {
     "id": 2,
     "name": "finished",
-    "projectId": 3
+    "projectId": 3,
+    "order": 2
   },
   {
     "id": 3,
     "name": "waiting",
-    "projectId": 3
+    "projectId": 3,
+    "order": 3
   }
 ]

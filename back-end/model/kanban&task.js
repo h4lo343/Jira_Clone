@@ -14,7 +14,20 @@ const kanbanSchema = mongoose.Schema({
         type: Number,
         required: [true, 'Please provide projectId']
     },
+    order: {
+        type: Number,
+        required: [true, 'Please provide order']
+    }
 })
+
+kanbanSchema.post('remove',async function(next) {
+    const kanbans = await mongoose.model('Kanban').find({});
+
+    for (let i = 0; i < kanbans.length; i++) {
+        kanbans[i].id = i + 1;
+        await kanbans[i].save();
+    }
+});
 
 const taskSchema = mongoose.Schema({
     id: {
@@ -44,8 +57,21 @@ const taskSchema = mongoose.Schema({
     processorId: {
         type: Number,
         required: [true, 'Please provide processor Id']
+    },
+    order: {
+        type: Number,
+        required: [true, 'Please provide order']
     }
 })
+
+taskSchema.post('remove',async function(next) {
+    const tasks = await mongoose.model('Task').find({});
+    for (let i = 0; i < tasks.length; i++) {
+        tasks[i].id = i + 1;
+        await tasks[i].save();
+    }
+});
+
 
 module.exports = {
     Kanban: mongoose.model('Kanban', kanbanSchema),

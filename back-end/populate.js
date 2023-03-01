@@ -14,10 +14,10 @@ const taskData = require('./jsonData/task.json');
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);
-        // await Kanban.deleteMany();
-        // await Kanban.create(kanbanData);
-        await Task.deleteMany();
-        await Task.create(taskData);
+        await Kanban.deleteMany();
+        await Kanban.create(kanbanData);
+        // await Task.deleteMany();
+        // await Task.create(taskData);
         console.log("done")
     } catch (e) {
         console.log(e)
