@@ -6,7 +6,8 @@
     "type": "bug",
     "processorId": 1,
     "id": 1,
-    "order": 1
+    "order": 1,
+    "epicId": 1
   },
   {
     "kanbanId": 1,
@@ -15,7 +16,8 @@
     "type": "task",
     "processorId": 1,
     "id": 2,
-    "order": 2
+    "order": 2,
+    "epicId": 1
   },
   {
     "kanbanId": 2,
@@ -24,7 +26,8 @@
     "type": "task",
     "processorId": 3,
     "id": 3,
-    "order": 3
+    "order": 3,
+    "epicId": 1
   },
   {
     "kanbanId": 2,
@@ -33,7 +36,8 @@
     "type": "bug",
     "processorId": 4,
     "id": 4,
-    "order": 4
+    "order": 4,
+    "epicId": 2
   },
   {
     "kanbanId": 3,
@@ -42,7 +46,8 @@
     "type": "bug",
     "processorId": 2,
     "id": 5,
-    "order": 5
+    "order": 5,
+    "epicId": 2
   },
   {
     "kanbanId": 3,
@@ -51,7 +56,8 @@
     "type": "task",
     "processorId": 3,
     "id": 6,
-    "order": 6
+    "order": 6,
+    "epicId": 2
   },
   {
     "kanbanId": 3,
@@ -60,6 +66,7 @@
     "type": "task",
     "processorId": 1,
     "id": 7,
-    "order": 7
+    "order": 7,
+    "epicId": 2
   }
 ]

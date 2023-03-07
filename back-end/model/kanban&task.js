@@ -58,6 +58,10 @@ const taskSchema = mongoose.Schema({
         type: Number,
         required: [true, 'Please provide processor Id']
     },
+    epicId: {
+        type: Number,
+        required: [true, 'Please provide epic Id']
+    },
     order: {
         type: Number,
         required: [true, 'Please provide order']

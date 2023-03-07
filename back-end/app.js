@@ -9,6 +9,7 @@ const projectRouter = require('./Routes/Project');
 const authRouter = require('./Routes/auth');
 const kanbanRouter = require('./Routes/kanban');
 const taskRouter = require('./Routes/task');
+const epicRouter = require('./Routes/epic')
 const cors = require('cors');
 
 const app = express();
@@ -21,6 +22,7 @@ app.use('/projects', projectRouter);
 app.use('/auth', authRouter);
 app.use('/kanbans', kanbanRouter);
 app.use('/tasks', taskRouter);
+app.use('/epics', epicRouter)
 
 
 app.use(notFound);

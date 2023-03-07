@@ -7,7 +7,7 @@ import { useTask } from "../../utils/task";
 
 export const useProjectIdInUrl = () => {
   const {pathname} = useLocation();
-  const id = pathname.match(/projects\/(\d+)\/kanban/)?.[1]
+  const id = pathname.match(/projects\/(\d+)/)?.[1];
   return Number(id);
 }
 

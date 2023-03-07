@@ -63,6 +63,7 @@ const Container = styled.div`
   flex-direction: column;
   height: 80vh;
   display: flex;
+ 
   justify-content: center;
   align-items: center;
 `

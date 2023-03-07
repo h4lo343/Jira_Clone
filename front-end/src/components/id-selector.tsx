@@ -11,6 +11,7 @@ interface IdSelectorProps extends Omit<SelectProps, 'value'|'onChange'|'options'
   defaultOptionName?: string,
   options?: {name: string, id: number | string}[]
 }
+
 export const IdSelector = (props: IdSelectorProps) => {
 
   // 用restProps接收透传的其他参数

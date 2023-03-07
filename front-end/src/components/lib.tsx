@@ -57,6 +57,7 @@ export const ButtonNoPadding = styled(Button)`
 export const ScreenContainer = styled.div`
   padding: 3.2rem;
   width: 100%;
+  height: 86vh;
   display: flex;
   flex-direction: column;
 `
