@@ -15,6 +15,7 @@ import { useDeleteKanban } from "../../utils/kanban";
 import { Row } from "../../components/lib";
 import React from "react";
 import { Drag, Drop, DropChild } from "../../components/drag-and-drop";
+import { useQueryClient } from "react-query";
 
 const TaskTypeIcon = ({id}:{id: number}) => {
   const {data: taskTypes} = useTasksTypes();
@@ -40,13 +41,14 @@ const TaskCard = ({task}:{task: Task }) => {
 }
 const More = ({kanban}:{kanban: Kanban}) => {
   const {mutateAsync} = useDeleteKanban(useKanbanQueryKey())
+  const queryClient = useQueryClient();
   const startEdit = () => {
     Modal.confirm({
       okText: "Confirm",
       cancelText: "Cancel",
       title: `Delete The Kanban ${kanban.name}?`,
       onOk() {
-        return mutateAsync({id: kanban.id})
+        mutateAsync({id: kanban.id}).then(() => { queryClient.invalidateQueries('tasks');})
       }
     })
   }
