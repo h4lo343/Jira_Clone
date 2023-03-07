@@ -3,6 +3,8 @@ const Person = require('../model/person');
 const CustomError = require('../error/custom-error');
 const e = require("express");
 const mongoose = require("mongoose");
+const Epic = require('../model/epic')
+const {Kanban, Task} = require('../model/kanban&task');
 
 const getProject = async (req, res) => {
     const { name, personId } = req.query;
@@ -63,12 +65,16 @@ const updateProject = async (req, res) => {
 const deleteProjectById= async (req, res) => {
     const {id} = req.params
     const project = await Project.findOne({id});
+    await Kanban.deleteMany({projectId: id});
+    await Task.deleteMany({projectId: id});
+    await Epic.deleteMany({projectId: id});
 
     if (!project) {
         throw new CustomError("No Project Found", 404);
     }
 
     project.remove();
+
 
     res.status(200).json({message: "ok"});
 }

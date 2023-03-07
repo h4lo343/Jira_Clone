@@ -54,15 +54,12 @@ const addKanban = async (req,res) => {
 
 const deleteKanban = async (req, res) => {
     const {id} = req.params
-
     const kanban = await Kanban.findOne({id});
-
+    await Task.deleteMany({kanbanId: id})
     if (!kanban) {
         throw new CustomError("No Project Found", 404);
     }
-
     kanban.remove();
-
     res.status(200).json({message: "ok"});
 }
 

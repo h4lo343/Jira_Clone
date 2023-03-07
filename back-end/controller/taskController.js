@@ -81,6 +81,7 @@ const addTask = async (req,res) => {
         req.body.type = "bug"
     }
     req.body.id = count + 1;
+    req.body.epicId = 1;
     const newTask = await Task.create(req.body)
     res.status(201).send(newTask);
     req.body.order = count + 1;
@@ -126,7 +127,6 @@ const deleteTask = async (req, res) => {
     }
 
     task.remove();
-
     res.status(200).json({message: "ok"});
 }
 

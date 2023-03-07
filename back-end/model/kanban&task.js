@@ -4,7 +4,7 @@ const kanbanSchema = mongoose.Schema({
     id: {
         type: Number,
         required: [true, 'Please provide taskId'],
-        unique: true
+
     },
     name: {
         type: String,
@@ -33,7 +33,7 @@ const taskSchema = mongoose.Schema({
     id: {
         type: Number,
         required: [true, 'Please provide taskId'],
-        unique: true
+
     },
     kanbanId: {
         type: Number,
