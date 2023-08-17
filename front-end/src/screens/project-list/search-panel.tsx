@@ -8,7 +8,8 @@ interface SearchPanelProps {
   param: Partial<Pick<Project, 'name' | 'personId'> >
   setParam: (param: SearchPanelProps['param']) => void
 }
-export const SearchPanel = ({param, setParam, users}: SearchPanelProps) => {
+export const
+    SearchPanel = ({param, setParam, users}: SearchPanelProps) => {
 
 
   return <Form style={{marginBottom:"2rem"}} layout={'inline'}>
