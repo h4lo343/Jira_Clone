@@ -26,7 +26,6 @@ const epicSchema = new mongoose.Schema({
 
 epicSchema.post('remove',async function(next) {
     const epics = await mongoose.model('Epic').find({});
-
     for (let i = 0; i < epics.length; i++) {
         epics[i].id = i + 1;
         await epics[i].save();

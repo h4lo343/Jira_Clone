@@ -2,7 +2,8 @@ import { useSearchParams, URLSearchParamsInit } from "react-router-dom";
 import { useMemo } from "react";
 import { cleanObject } from "./index";
 
-
+// https://stackoverflow.com/questions/52085454/typescript-define-a-union-type-from-an-array-of-strings
+// the second answer clarifies the type question here 
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   const [searchParams, setSearchParam] = useSearchParams();
   return [
@@ -13,8 +14,7 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
             return { ...prev, [key]: searchParams.get(key)};
           }
           , {} as { [key in K]: string });
-      }
-      ,
+      },
       [searchParams]),
     (params: Partial<{[key in K]: unknown}>) => {
       const o = cleanObject({...Object.fromEntries(searchParams), ...params})

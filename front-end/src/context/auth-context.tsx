@@ -16,9 +16,15 @@ const bootstrapUser = async () => {
   let user = null;
   const token = auth.getToken();
   if(token) {
-    const data = await http('auth/me', {data:{token}});
-    user = data;
-    return user;
+    try {
+      const data = await http('auth/me', {data:{token}});
+      user = data;
+      return user;
+    }
+    catch(e) {
+      console.log(e)
+    }
+    
   }
 }
 

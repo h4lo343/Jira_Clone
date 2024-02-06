@@ -32,8 +32,8 @@ export const KanbanScreen = () => {
 
   const {data: currentProject} = useProjectInUrl();
   const {data: Kanbans, isLoading: kanbanIsLoading} = useKanbans(useKanbanSearchParams())
-  const {isLoading:taskIsLoading, data:tasks} = useTasks(useTasksSearchParams());
-  const isLoading = taskIsLoading || kanbanIsLoading;
+  
+  const isLoading =  kanbanIsLoading;
 
   const onDragEnd = useDragEnd();
   return (
