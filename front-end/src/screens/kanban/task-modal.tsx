@@ -53,10 +53,10 @@ export const TaskModal = () => {
         <Input/>
       </Form.Item>
       <Form.Item label={"Processor"} name={"processorId"}>
-        <UserSelector defaultOptionName={"ProcessorId"}/>
+        <UserSelector defaultOptionName={"All ProcessorId"}/>
       </Form.Item>
       <Form.Item label={"Type"} name={"typeId"}>
-        <TaskTypeSelector defaultOptionName={"Types"}/>
+        <TaskTypeSelector defaultOptionName={"All Types"}/>
       </Form.Item>
     </Form>
     <div style={{textAlign:'right'}}>

@@ -25,7 +25,7 @@ export const
     </Form.Item>
     <Form.Item>
       <UserSelector
-        defaultOptionName={"Manager"}
+        defaultOptionName={"All Manager"}
         onChange={value => {
           setParam({
             ...param,

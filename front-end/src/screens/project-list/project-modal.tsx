@@ -45,7 +45,7 @@ export const ProjectModal = () => {
               <Input placeholder={"please input Organization"}/>
             </Form.Item>
             <Form.Item label={'Manager'} name={"personId"}>
-              <UserSelector defaultOptionName={'Manager'} />
+              <UserSelector defaultOptionName={'All Manager'} />
             </Form.Item>
             <Form.Item style={{display:"flex", justifyContent:"end"}}>
               <Button loading={mutateLoading} type={"primary"} htmlType={"submit"}>

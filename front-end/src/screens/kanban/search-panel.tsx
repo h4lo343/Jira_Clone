@@ -25,8 +25,8 @@ export const SearchPanel = () => {
       placeholder={"Task name"}
       value={searchParams.name}
       onChange={evt => setSearchParams({name: evt.target.value})} />
-      <UserSelector defaultOptionName={"Processor"}  onChange={value => setSearchParams({processorId: value})} value={searchParams.processorId}/>
-      <TaskTypeSelector defaultOptionName={"Types"} onChange={value => setSearchParams({typeId: value})} value={searchParams.typeId}/>
+      <UserSelector defaultOptionName={"All Processor"}  onChange={value => setSearchParams({processorId: value})} value={searchParams.processorId}/>
+      <TaskTypeSelector defaultOptionName={"All Types"} onChange={value => setSearchParams({typeId: value})} value={searchParams.typeId}/>
       <Button onClick={reset}>Clean Filter</Button>
   </Row>
 

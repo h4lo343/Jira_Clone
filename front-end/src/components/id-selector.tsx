@@ -1,5 +1,6 @@
 import { Raw } from "../types";
 import { Select } from "antd";
+import { useState } from 'react'
 
 // 使用react自带utility type获取组件props
 type SelectProps = React.ComponentProps<typeof Select>
@@ -13,13 +14,24 @@ interface IdSelectorProps extends Omit<SelectProps, 'value'|'onChange'|'options'
 }
 
 export const IdSelector = (props: IdSelectorProps) => {
-
+   
   // 用restProps接收透传的其他参数
   const { value, onChange, defaultOptionName, options, ...restProps } = props;
+  const [people, setPeople] = useState(defaultOptionName)
+  console.log(defaultOptionName)
+ 
   return <Select
-    value={options?.length ? toNumber(value) : 0}
-    onChange={(value) => onChange?.(toNumber(value))}
+    
+    value={people}
+    onChange={(value) => {
+      onChange?.(toNumber(value))
+      if(value === 0) {
+        setPeople(defaultOptionName)
+      }
+      else setPeople(options?.length? options[toNumber(value) - 1]?.name : '')
+    }}
     {...restProps}
+    style = {{width: '13rem'}}
   >
     {defaultOptionName ? (
       <Select.Option value={0}>{defaultOptionName}</Select.Option>
